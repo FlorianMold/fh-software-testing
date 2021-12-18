@@ -1,0 +1,42 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {},
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "mars",
+  "author": "Florian Mold",
+  "module": "dist/mars.esm.js",
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "4.5.2"
+  },
+  "dependencies": {
+    "commander": "^6.1.0",
+    "csv": "^6.0.4",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^8.2.0"
+  }
+}
