@@ -1,0 +1,4 @@
+export const MIN_MARS_HOUR = 0
+export const MAX_MARS_HOUR = 25
+export const MIN_MARS_MINUTE = 0
+export const MAX_MARS_MINUTE = 100
