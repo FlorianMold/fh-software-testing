@@ -11,6 +11,7 @@ export type MarsMoonInputTimestamp = DeimosInputTimestamp | PhobosInputTimestamp
 
 // Program types
 export type MoonTimestamp = { hour: MarsHour, minute: MarsMinute }
+export type MoonTimestampDuration = MoonTimestamp[]
 export type MarsMoonAbbr = 'P' | 'D'
 export type MoonRiseSinkTimestamp = { rise: MoonTimestamp, sink: MoonTimestamp, readonly abbr: MarsMoonAbbr }
 export type DeimosTimestamp = MoonRiseSinkTimestamp
