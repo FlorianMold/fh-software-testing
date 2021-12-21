@@ -54,14 +54,9 @@ export function isEqual(firstTimestamp: MoonTimestamp, secondTimestamp: MoonTime
  */
 export function computeMinuteDifferenceOfTimestamps(firstTimestamp: MoonTimestamp, secondTimestamp: MoonTimestamp): MarsMinute {
     let diff = 0
-    let isMatched = false
 
-    while (!isMatched) {
-        if (isEqual(firstTimestamp, secondTimestamp)) {
-            isMatched = true
-            break
-        }
 
+    while (!isEqual(firstTimestamp, secondTimestamp)) {
         firstTimestamp = addMinutesToTimestamp(firstTimestamp)
         diff++
     }
