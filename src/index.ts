@@ -15,10 +15,10 @@ const {phobos, deimos} = options
 
 const parsedInput = `${deimos};${phobos}`
 const timestampTuple = InputParser.parseInput(parsedInput)
-const isValid = MoonTimestampValidator.validate(timestampTuple)
+const errorMessages = MoonTimestampValidator.validateAndReturnErrorMessages(timestampTuple)
 
-if (!isValid) {
-    console.log('invalid')
+if (errorMessages.length) {
+    console.log(errorMessages)
     process.exit(1)
 }
 

@@ -1,17 +1,33 @@
 import {MarsHour, MarsMinute, MoonRiseSinkTimestamp, MoonTimestamp, MoonTimestampTuple} from "../moon.types"
 import * as MOON_CONSTANT from "../constant/moon.constants"
+import {MOON_NAME} from "../constant/moon.constants"
+import {mapMessageToArrayIfExpressionIsTrue, mapMoonRiseSinkTimestampToMoonTimestamp} from "../util/util";
+import {ERROR_MESSAGE} from "../util/error-messages";
+
+/**
+ * Validates the moon-timestamp-tuple. The tuple is considered valid, when all time moon-rise-sink-timestamps
+ * are correct. Each invalid validation adds an error
+ *
+ * @param moonTimestampTuple Tuple that should be validated.
+ * @returns Returns true, if rise and sink are valid.
+ */
+export function validateAndReturnErrorMessages(moonTimestampTuple: MoonTimestampTuple) {
+    return moonTimestampTuple.flatMap(mapMoonRiseSinkTimestampToMoonTimestamp)
+        .flatMap(t =>
+            mapMessageToArrayIfExpressionIsTrue(validateMoonTimestamp(t.moonTimestamp),
+                `${MOON_NAME[t.moonName]}: ${ERROR_MESSAGE.TIMESTAMP_INVALID} (${t.rise}: ${JSON.stringify(t.moonTimestamp)})`)
+        )
+}
 
 /**
  * Validates the moon-timestamp-tuple. The tuple is considered valid, when all time moon-rise-sink-timestamps
  * are correct.
  *
  * @param moonTimestampTuple Tuple that should be validated.
-  @returns Returns true, if rise and sink are valid.
+ * @returns Returns true, if rise and sink are valid.
  */
 export function validate(moonTimestampTuple: MoonTimestampTuple): boolean {
-    const [deimosTimestamp, phobosTimestamp] = moonTimestampTuple
-    return validateMoonSinkRiseTimestamp(deimosTimestamp) &&
-        validateMoonSinkRiseTimestamp(phobosTimestamp)
+    return moonTimestampTuple.every(validateMoonSinkRiseTimestamp)
 }
 
 /**
