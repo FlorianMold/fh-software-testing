@@ -1,34 +1,5 @@
-import {MarsHour, MarsMinute, MoonRiseSinkTimestamp, MoonTimestamp, MoonTimestampTuple} from "../moon.types"
+import {MarsHour, MarsMinute, MoonRiseSinkTimestamp, MoonTimestamp} from "../types/moon.types"
 import * as MOON_CONSTANT from "../constant/moon.constants"
-import {MOON_NAME} from "../constant/moon.constants"
-import {mapMessageToArrayIfExpressionIsTrue, mapMoonRiseSinkTimestampToMoonTimestamp} from "../util/util";
-import {ERROR_MESSAGE} from "../util/error-messages";
-
-/**
- * Validates the moon-timestamp-tuple. The tuple is considered valid, when all time moon-rise-sink-timestamps
- * are correct. Each invalid validation adds an error
- *
- * @param moonTimestampTuple Tuple that should be validated.
- * @returns Returns true, if rise and sink are valid.
- */
-export function validateAndReturnErrorMessages(moonTimestampTuple: MoonTimestampTuple) {
-    return moonTimestampTuple.flatMap(mapMoonRiseSinkTimestampToMoonTimestamp)
-        .flatMap(t =>
-            mapMessageToArrayIfExpressionIsTrue(validateMoonTimestamp(t.moonTimestamp),
-                `${MOON_NAME[t.moonName]}: ${ERROR_MESSAGE.TIMESTAMP_INVALID} (${t.rise}: ${JSON.stringify(t.moonTimestamp)})`)
-        )
-}
-
-/**
- * Validates the moon-timestamp-tuple. The tuple is considered valid, when all time moon-rise-sink-timestamps
- * are correct.
- *
- * @param moonTimestampTuple Tuple that should be validated.
- * @returns Returns true, if rise and sink are valid.
- */
-export function validate(moonTimestampTuple: MoonTimestampTuple): boolean {
-    return moonTimestampTuple.every(validateMoonSinkRiseTimestamp)
-}
 
 /**
  * Checks if the moon-sink-rise-timestamp is valid. The timestamp is considered valid, when
@@ -37,9 +8,9 @@ export function validate(moonTimestampTuple: MoonTimestampTuple): boolean {
  * @param moonSinkRiseTimestamp MoonSinkRiseTimestamp that should be validated.
  * @returns Returns true, if rise and sink are valid.
  */
-function validateMoonSinkRiseTimestamp(moonSinkRiseTimestamp: MoonRiseSinkTimestamp): boolean {
-    const {rise, sink} = moonSinkRiseTimestamp
-    return validateMoonTimestamp(rise) &&
+export function validateMoonSinkRiseTimestamp(moonSinkRiseTimestamp: MoonRiseSinkTimestamp): boolean {
+    const {rise, sink, abbr} = moonSinkRiseTimestamp
+    return MOON_CONSTANT.MOON_ABBR.includes(abbr) && validateMoonTimestamp(rise) &&
         validateMoonTimestamp(sink)
 }
 

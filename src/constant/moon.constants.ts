@@ -7,3 +7,5 @@ export const MOON_NAME = {
     D: 'Deimos',
     P: 'Phobos'
 }
+
+export const MOON_ABBR = ['D', 'P'] as const

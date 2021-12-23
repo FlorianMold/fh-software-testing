@@ -13,14 +13,15 @@ program
 const options = program.opts()
 const {timestamp} = options
 
-const timestampTuple = InputParser.parseInput(timestamp)
-const errorMessages = MoonTimestampValidator.validateAndReturnErrorMessages(timestampTuple)
+const timestampTuple = InputParser.parseInputLine(timestamp)
+const [deimos, phobos] = timestampTuple
+const deimosValid = MoonTimestampValidator.validateMoonSinkRiseTimestamp(deimos)
+const phobosValid = MoonTimestampValidator.validateMoonSinkRiseTimestamp(phobos)
 
-if (errorMessages.length) {
-    console.log(errorMessages)
+if (!(phobosValid && deimosValid)) {
+    console.log(phobos)
     process.exit(1)
 }
 
-const [deimos, phobos] = timestampTuple;
 const minuteDifference = Overlap.computeMoonTimestampOverlap(deimos, phobos)
 console.log(`${timestamp}: Difference between ${MOON_NAME[deimos.abbr]} and ${MOON_NAME[phobos.abbr]} is ${minuteDifference} minutes`)

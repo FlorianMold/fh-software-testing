@@ -1,4 +1,4 @@
-import {MarsHour, MarsMinute, MoonTimestamp, MoonTimestampDuration} from "../moon.types"
+import {MarsHour, MarsMinute, MoonTimestamp, MoonTimestampDuration} from "../types/moon.types"
 import * as MOON_CONSTANT from "../constant/moon.constants"
 
 /**
@@ -54,7 +54,6 @@ export function isEqual(firstTimestamp: MoonTimestamp, secondTimestamp: MoonTime
  */
 export function computeMinuteDifferenceOfTimestamps(firstTimestamp: MoonTimestamp, secondTimestamp: MoonTimestamp): MarsMinute {
     let diff = 0
-
 
     while (!isEqual(firstTimestamp, secondTimestamp)) {
         firstTimestamp = addMinutesToTimestamp(firstTimestamp)
